@@ -15,5 +15,6 @@ RUN echo "=== Check flask_app.py ===" && test -f /app/my-website/flask_app.py &&
 
 EXPOSE 5000
 
-# Run with absolute path
-CMD ["python", "/app/my-website/flask_app.py"]
+# Change to my-website directory and run
+WORKDIR /app/my-website
+CMD ["python", "flask_app.py"]
