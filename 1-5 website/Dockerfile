@@ -2,25 +2,18 @@ FROM cloudtype/python:3.11
 
 WORKDIR /app
 
-# Copy requirements.txt from my-website subdirectory
-COPY my-website/requirements.txt ./
-
-RUN pip install -r requirements.txt
-
-# Copy all files from repository root
+# Copy everything first
 COPY . ./
 
-# List files for debugging
-RUN ls -la /app
-RUN ls -la /app/my-website/
-RUN pwd
+# Install requirements from the correct location
+RUN pip install -r my-website/requirements.txt
 
-# Make sure flask_app.py exists
-RUN test -f flask_app.py && echo "flask_app.py found" || echo "flask_app.py NOT found"
-RUN test -f my-website/flask_app.py && echo "my-website/flask_app.py found" || echo "my-website/flask_app.py NOT found"
+# List everything for debugging
+RUN echo "=== Root directory ===" && ls -la /app
+RUN echo "=== my-website directory ===" && ls -la /app/my-website/
+RUN echo "=== Check flask_app.py ===" && test -f /app/my-website/flask_app.py && echo "FOUND!" || echo "NOT FOUND!"
 
 EXPOSE 5000
 
-# Change working directory to my-website and run flask_app.py
-WORKDIR /app/my-website
-CMD ["python", "flask_app.py"]
+# Run with absolute path
+CMD ["python", "/app/my-website/flask_app.py"]
