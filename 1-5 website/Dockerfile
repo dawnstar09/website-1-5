@@ -4,7 +4,7 @@ FROM cloudtype/python:3.11
 COPY . /app
 
 # Install requirements
-RUN pip install -r /app/requirements.txt
+RUN pip install -r "/app/1-5 website/requirements.txt"
 
 # Debug - check if flask_app.py is in app
 RUN echo "=== /app directory contents ==="
