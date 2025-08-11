@@ -10,4 +10,7 @@ COPY . .
 
 EXPOSE 5000
 
+# List files for debugging
+RUN ls -la /app
+
 CMD ["python", "flask_app.py"]
