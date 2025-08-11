@@ -1,17 +1,15 @@
 FROM cloudtype/python:3.11
 
-WORKDIR /home/user
-
-# Copy everything
-COPY . .
+# Copy everything to app directory (which exists in the container)
+COPY . /app
 
 # Install requirements
-RUN pip install -r requirements.txt
+RUN pip install -r /app/requirements.txt
 
-# Debug - check if flask_app.py is in home/user
-RUN ls -la /home/user
-RUN test -f flask_app.py && echo "flask_app.py FOUND!" || echo "flask_app.py NOT found"
+# Debug - check if flask_app.py is in app
+RUN ls -la /app
+RUN test -f /app/flask_app.py && echo "flask_app.py FOUND!" || echo "flask_app.py NOT found"
 
 EXPOSE 5000
 
-CMD ["python", "flask_app.py"]
+CMD ["python", "/app/flask_app.py"]
